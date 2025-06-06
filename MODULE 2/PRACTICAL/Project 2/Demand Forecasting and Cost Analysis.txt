@@ -1,0 +1,29 @@
+# Sample products with inventory count and cost per unit
+products = {
+    "Product X": {"inventory": 100, "cost_per_unit": 5.0},
+    "Product Y": {"inventory": 200, "cost_per_unit": 3.5},
+    "Product Z": {"inventory": 150, "cost_per_unit": 4.2},
+}
+
+def forecast_demand(current_inventory, increase_percent):
+    """Forecast next month demand by increasing current inventory by a percent."""
+    forecasted = current_inventory * (1 + increase_percent / 100)
+    return int(forecasted)
+
+def show_forecast_and_budget():
+    increase_percent = float(input("Enter expected demand increase percentage (e.g. 10): "))
+    print("\nForecast and Budget Estimate:")
+    for product, details in products.items():
+        forecast = forecast_demand(details["inventory"], increase_percent)
+        estimated_cost = forecast * details["cost_per_unit"]
+        print(f"{product}:")
+        print(f"  Current Inventory: {details['inventory']}")
+        print(f"  Forecasted Demand: {forecast}")
+        print(f"  Cost per Unit: ${details['cost_per_unit']}")
+        print(f"  Estimated Total Cost: ${estimated_cost:.2f}\n")
+
+def main():
+    show_forecast_and_budget()
+
+if __name__ == "__main__":
+    main()

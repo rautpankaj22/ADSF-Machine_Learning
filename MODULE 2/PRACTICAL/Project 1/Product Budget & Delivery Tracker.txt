@@ -1,0 +1,52 @@
+# Simple Product Budgeting and Scheduling using dictionaries
+
+products = []  # list to store product dictionaries
+
+def add_product():
+    name = input("Enter product name: ")
+    budget = float(input("Enter product budget: "))
+    delivery_date = input("Enter delivery date (YYYY-MM-DD): ")
+    
+    product = {
+        "name": name,
+        "budget": budget,
+        "delivery_date": delivery_date
+    }
+    products.append(product)
+    print("Product added successfully!")
+
+def show_products():
+    print("\nList of Products:")
+    for i, p in enumerate(products, start=1):
+        print(f"{i}. Name: {p['name']}, Budget: ${p['budget']}, Delivery Date: {p['delivery_date']}")
+
+def show_total_budget():
+    total = 0
+    for p in products:
+      total = total + p["budget"]
+    print(f"\nTotal budget for all products: ${total}")
+
+def main():
+    while True:
+        print("\nMenu:")
+        print("1. Add Product")
+        print("2. Show Products")
+        print("3. Show Total Budget")
+        print("4. Exit")
+        
+        choice = input("Choose an option: ")
+        
+        if choice == "1":
+            add_product()
+        elif choice == "2":
+            show_products()
+        elif choice == "3":
+            show_total_budget()
+        elif choice == "4":
+            print("Exiting... Bye!")
+            break
+        else:
+            print("Invalid option. Try again.")
+
+if __name__ == "__main__":
+    main()
