@@ -1,0 +1,19 @@
+import numpy as np
+from scipy import stats
+
+# Manually input the scores for 'New' and 'Traditional' methods
+new_scores = [80, 85, 78, 92, 84, 76, 90, 88]  # Example scores for New method
+trad_scores = [75, 80, 70, 88, 79, 72, 86, 83]  # Example scores for Traditional method
+
+# Perform an independent t-test
+t_stat, p_value = stats.ttest_ind(new_scores, trad_scores)
+
+# Print the results
+print(f"T-statistic: {t_stat:.2f}")
+print(f"P-value: {p_value:.2f}")
+
+# Hypothesis testing interpretation
+if p_value < 0.05:
+    print("✅ Statistically significant difference between the groups.")
+else:
+    print("❌ No statistically significant difference between the groups.")

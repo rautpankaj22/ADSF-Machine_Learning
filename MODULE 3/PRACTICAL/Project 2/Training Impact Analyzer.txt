@@ -1,0 +1,45 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import pearsonr
+from sklearn.linear_model import LinearRegression
+
+# Sample Data: Training Hours vs. Performance Scores
+data = {
+    "Training_Hours": [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+    "Performance_Score": [55, 60, 65, 70, 72, 78, 85, 87, 90, 95]
+}
+df = pd.DataFrame(data)
+
+# Pearson Correlation Coefficient
+pearson_corr, _ = pearsonr(df["Training_Hours"], df["Performance_Score"])
+print(f"Pearson Correlation Coefficient: {pearson_corr:.2f}")
+
+# Scatter Plot with Regression Line
+sns.regplot(x=df["Training_Hours"], y=df["Performance_Score"], ci=None)
+plt.xlabel("Training Hours")
+plt.ylabel("Performance Score")
+plt.title("Training Hours vs. Performance Score")
+plt.show()
+
+# Method of Least Squares (Linear Regression)
+X = df["Training_Hours"].values.reshape(-1, 1)
+y = df["Performance_Score"].values.reshape(-1, 1)
+model = LinearRegression()
+model.fit(X, y)
+
+y_pred = model.predict(X)
+
+# Plot the Least Squares Regression Line
+plt.scatter(df["Training_Hours"], df["Performance_Score"], color='blue', label='Actual Data')
+plt.plot(df["Training_Hours"], y_pred, color='red', label='Regression Line')
+plt.xlabel("Training Hours")
+plt.ylabel("Performance Score")
+plt.title("Method of Least Squares - Linear Regression")
+plt.legend()
+plt.show()
+
+# Display Regression Coefficients
+print(f"Slope (m): {model.coef_[0][0]:.2f}")
+print(f"Intercept (b): {model.intercept_[0]:.2f}")

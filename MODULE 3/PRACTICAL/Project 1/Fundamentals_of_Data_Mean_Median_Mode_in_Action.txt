@@ -1,0 +1,30 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Sample dataset: Student Scores
+data = {'Student': ['RAMESH', 'SURESH', 'MILIND', 'RINKU', 'KISHOR', 'RAVI', 'NARESH', 'MUKUND', 'MANOJ', 'VIJAY'],
+        'Math_Score': [78, 85, 92, 88, 76, 91, 89, 83, 91, 87]}
+df = pd.DataFrame(data)
+
+# Compute descriptive statistics
+mean_score = np.mean(df['Math_Score'])
+median_score = np.median(df['Math_Score'])
+mode_score = df['Math_Score'].mode()[0]
+
+print(f"Mean Score: {mean_score}")
+print(f"Median Score: {median_score}")
+print(f"Mode Score: {mode_score}")
+
+# Visualizing the Data
+plt.figure(figsize=(8, 5))
+sns.histplot(df['Math_Score'], kde=True, bins=5, color='blue', alpha=0.5)
+plt.axvline(mean_score, color='red', linestyle='dashed', linewidth=2, label=f'Mean: {mean_score}')
+plt.axvline(median_score, color='green', linestyle='dashed', linewidth=2, label=f'Median: {median_score}')
+plt.axvline(mode_score, color='orange', linestyle='dashed', linewidth=2, label=f'Mode: {mode_score}')
+plt.legend()
+plt.title('Distribution of Math Scores with Measures of Central Tendency')
+plt.xlabel('Math Scores')
+plt.ylabel('Frequency')
+plt.show()
