@@ -1,0 +1,101 @@
+def get_student_data():
+    name = input("Enter student name: ")
+    marks = []
+
+    for i in range(5):  # Assume 5 subjects
+        while True:
+            try:
+                mark = float(input(f"Enter marks for subject {i+1} (0-100): "))
+                if 0 <= mark <= 100:
+                    marks.append(mark)
+                    break
+                else:
+                    print("Marks should be between 0 and 100.")
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+    
+    return name, marks
+
+
+def calculate_percentage(marks):
+    if len(marks) == 0:
+        return 0
+    return sum(marks) / len(marks)
+
+
+def calculate_grade(percentage):
+    if not isinstance(percentage, (int, float)):
+        raise ValueError("Percentage must be a number.")
+    
+    if percentage >= 90:
+        return 'A'
+    elif percentage >= 80:
+        return 'B'
+    elif percentage >= 70:
+        return 'C'
+    elif percentage >= 60:
+        return 'D'
+    else:
+        return 'F'
+
+
+def display_report(name, marks, percentage, grade):
+    print("\n========== Student Report ==========")
+    print(f"Name       : {name}")
+    print(f"Marks      : {marks}")
+    print(f"Percentage : {percentage:.2f}%")
+    print(f"Grade      : {grade}")
+    print("====================================\n")
+
+
+def run_grading_system():
+    name, marks = get_student_data()
+    percentage = calculate_percentage(marks)
+    grade = calculate_grade(percentage)
+    display_report(name, marks, percentage, grade)
+
+
+# ------------------------------
+# Test cases
+# ------------------------------
+def test_calculate_grade():
+    print("Running test cases...")
+
+    assert calculate_grade(95) == 'A', "Failed test case: 95 → A"
+    assert calculate_grade(85) == 'B', "Failed test case: 85 → B"
+    assert calculate_grade(72) == 'C', "Failed test case: 72 → C"
+    assert calculate_grade(60) == 'D', "Failed test case: 60 → D"
+    assert calculate_grade(45) == 'F', "Failed test case: 45 → F"
+
+    # Boundary values
+    assert calculate_grade(89.99) == 'B', "Failed boundary test: 89.99 → B"
+    assert calculate_grade(90) == 'A', "Failed boundary test: 90 → A"
+    assert calculate_grade(79.99) == 'C', "Failed boundary test: 79.99 → C"
+    assert calculate_grade(80) == 'B', "Failed boundary test: 80 → B"
+
+    # Exception handling
+    try:
+        calculate_grade("eighty")
+        print("Failed: Did not raise ValueError for string input.")
+    except ValueError:
+        print("Passed: ValueError for string input.")
+
+    print("All test cases passed!")
+
+
+# ------------------------------
+# Main Entry Point
+# ------------------------------
+if __name__ == "__main__":
+    print("Choose an option:")
+    print("1. Run Grading System")
+    print("2. Run Test Cases")
+
+    choice = input("Enter 1 or 2: ")
+
+    if choice == "1":
+        run_grading_system()
+    elif choice == "2":
+        test_calculate_grade()
+    else:
+        print("Invalid choice. Exiting.")
