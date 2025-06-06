@@ -1,0 +1,49 @@
+import json
+
+def calculate_grade(average):
+    if average >= 90:
+        return "A"
+    elif average >= 80:
+        return "B"
+    elif average >= 70:
+        return "C"
+    elif average >= 60:
+        return "D"
+    else:
+        return "F"
+
+def input_student_data():
+    name = input("Enter student name: ")
+    scores = []
+    for subject in ["Math", "Science", "English"]:
+        score = float(input(f"Enter score for {subject}: "))
+        scores.append(score)
+    average = sum(scores) / len(scores)
+    grade = calculate_grade(average)
+
+    return {
+        "name": name,
+        "scores": scores,
+        "average": average,
+        "grade": grade
+    }
+
+def save_data(student_data, filename="grades_data.json"):
+    try:
+        with open(filename, "r") as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        data = []
+
+    data.append(student_data)
+
+    with open(filename, "w") as f:
+        json.dump(data, f, indent=4)
+
+def main():
+    student = input_student_data()
+    save_data(student)
+    print(f"{student['name']}'s data saved successfully!")
+
+if __name__ == "__main__":
+    main()
